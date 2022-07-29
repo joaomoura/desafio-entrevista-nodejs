@@ -1,49 +1,25 @@
 import { AuthenticationService } from '../authentication.service';
-import { Test } from '@nestjs/testing';
-import { UsersModule } from '../../users/users.module';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { JwtModule } from '@nestjs/jwt';
-import { DatabaseModule } from '../../database/database.module';
-import * as Joi from '@hapi/joi';
+import { UsersService } from '../../users/users.service';
+import { Repository } from 'typeorm';
+import User from '../../users/user.entity';
+import { JwtService } from '@nestjs/jwt';
+import { ConfigService } from '@nestjs/config';
  
-describe('The AuthenticationService', () => {
+describe('AuthenticationService', () => {
   let authenticationService: AuthenticationService;
-  beforeEach(async () => {
-    const module = await Test.createTestingModule({
-      imports: [
-        UsersModule,
-        ConfigModule.forRoot({
-          validationSchema: Joi.object({
-            DATABASE_HOST: Joi.string().required(),
-            DATABASE_PORT: Joi.number().required(),
-            DATABASE_USER: Joi.string().required(),
-            MYSQL_ROOT_PASSWORD: Joi.string().required(),
-            MYSQL_DATABASE: Joi.string().required(),
-            JWT_SECRET: Joi.string().required(),
-            JWT_EXPIRATION_TIME: Joi.string().required(),
-            PORT: Joi.number(),
-          })
-        }),
-        DatabaseModule,
-        JwtModule.registerAsync({
-          imports: [ConfigModule],
-          inject: [ConfigService],
-          useFactory: async (configService: ConfigService) => ({
-            secret: configService.get('JWT_SECRET'),
-            signOptions: {
-              expiresIn: `${configService.get('JWT_EXPIRATION_TIME')}s`,
-            },
-          }),
-        }),
-      ],
-      providers: [
-        AuthenticationService
-      ],
-    }).compile();
-    authenticationService = await module.get<AuthenticationService>(AuthenticationService);
+  beforeEach(() => {
+    authenticationService = new AuthenticationService(
+      new UsersService(
+        new Repository<User>()
+      ),
+      new JwtService({
+        secretOrPrivateKey: 'Secret key'
+      }),
+      new ConfigService()
+    );
   })
-  describe('when creating a cookie', () => {
-    it('should return a string', () => {
+  describe('Ao criar um cookie', () => {
+    it('Deve retornar uma string', () => {
       const userId = 1;
       expect(
         typeof authenticationService.getCookieWithJwtToken(userId)
