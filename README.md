@@ -25,10 +25,19 @@ Se o sistema operacional for Windows mesmo configurando a variável ``` DATABASE
 
 #### Variáveis de Ambiente
 ```sh
-DATABASE_USER=root
+# DATABASE
+DATABASE_TYPE=mysql
 DATABASE_HOST=localhost
-MYSQL_DATABASE=nest
+DATABASE_PORT=3306
+DATABASE_USER=root
 MYSQL_ROOT_PASSWORD=root
+MYSQL_DATABASE=nest
+TZ=America/Sao_Paulo
+
+# JWT
+JWT_SECRET=secretJWT
+JWT_ACCESS_TOKEN_SECRET=secretJWT
+JWT_EXPIRATION_TIME=1800
 ```
 Feito isso o programa estará pronto para ser dockerizado.
 Abra o projeto através de um terminal de comando e rode o seguinte comando:
