@@ -11,7 +11,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import * as bcrypt from 'bcryptjs';
-import { Company } from 'src/companies/company.entity';
+import { Company } from '../companies/company.entity';
 // import { Company } from '../companies/company.entity';
 
 @Entity()

@@ -14,7 +14,7 @@ import {
 } from 'typeorm';
 import * as bcrypt from 'bcryptjs';
 import { Company } from '../companies/company.entity';
-import { Park } from 'src/parks/park.entity';
+import { Park } from '../parks/park.entity';
 
 @Entity()
 export class Automobile extends BaseEntity {

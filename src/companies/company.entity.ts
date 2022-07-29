@@ -11,7 +11,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import User from '../users/user.entity';
-import { Park } from 'src/parks/park.entity';
+import { Park } from '../parks/park.entity';
 
 @Entity()
 export class Company extends BaseEntity {
