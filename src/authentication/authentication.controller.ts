@@ -9,7 +9,7 @@ import LogInDto from './dto/logIn.dto';
 @Controller('authentication')
 export class AuthenticationController {
     constructor(
-        private readonly authenticationService: AuthenticationService
+        private readonly authenticationService: AuthenticationService,
     ) { }
 
     @Post('register')

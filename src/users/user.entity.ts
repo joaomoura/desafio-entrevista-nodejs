@@ -21,6 +21,9 @@ class User extends BaseEntity {
 
   @Column({ unique: true })
   public email: string;
+
+  @Column({ default: false })
+  public isEmailConfirmed: boolean;
  
   @Column()
   public name: string;
@@ -36,9 +39,12 @@ class User extends BaseEntity {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @OneToOne(() => Company, { eager: true, cascade: true })
-  @JoinColumn()
+  @OneToOne(() => Company, (Company: Company) => Company.user, { eager: true, cascade: true })
   public company: Company;
+
+  // @OneToOne(() => Company, { eager: true, cascade: true })
+  // @JoinColumn()
+  // public company: Company;
 
   @BeforeInsert()
   async hashPassword() {

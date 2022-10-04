@@ -44,7 +44,11 @@ export class Company extends BaseEntity {
   @UpdateDateColumn()
   updatedAt: Date;
 
+  // @OneToOne(() => User, (user: User) => user.company)
+  // public user: User;
+
   @OneToOne(() => User, (user: User) => user.company)
+  @JoinColumn()
   public user: User;
 
   @OneToMany(type => Park, park => park.company, { eager: true, cascade: ['remove'] })

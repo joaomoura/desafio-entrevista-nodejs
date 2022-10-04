@@ -52,6 +52,12 @@ export class UsersService {
     return await this.usersRepository.findOne(id);
   }
 
+  async markEmailAsConfirmed(email: string) {
+    return this.usersRepository.update({ email }, {
+      isEmailConfirmed: true
+    });
+  }
+
   // async getUserWithCompanies(id: number) {
   //   return await this.userRepository.findOne(id, { relations: ['company'] });
   // }
